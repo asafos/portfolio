@@ -1,0 +1,9 @@
+{
+  "presets": [
+    "poi/babel",
+    "@babel/preset-react"
+  ],
+  "plugins": [
+    "react-hot-loader/babel"
+  ]
+}

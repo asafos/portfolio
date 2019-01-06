@@ -1,0 +1,40 @@
+{
+  "name": "port",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "poi --serve",
+    "build": "poi index.js --prod",
+    "build:lib": "NODE_ENV=production babel src --out-dir lib --ignore __tests__",
+    "prepublish": "npm run build && npm run build:lib"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-react": "^7.0.0",
+    "node-sass": "^4.11.0",
+    "poi": "^12",
+    "poi-preset-react": "^9.2.1",
+    "react-hot-loader": "^4.6.0",
+    "sass-loader": "^7.1.0",
+    "webpack-bundle-analyzer": "^2.9.1"
+  },
+  "dependencies": {
+    "@material-ui/core": "^3.8.1",
+    "jss": "^10.0.0-alpha.5",
+    "react": "^16.4.2",
+    "react-dom": "16.4.2",
+    "react-jss": "^10.0.0-alpha.7",
+    "react-redux": "^5.1.0",
+    "react-redux-i18n": "^1.9.3",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "reduxsauce": "^1.0.1"
+  }
+}
