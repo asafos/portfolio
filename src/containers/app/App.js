@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/es/Grid/Grid";
 import {withStyles} from '@material-ui/core/styles';
 import {Route, Switch} from "react-router-dom";
 import Header from "./components/Header";
+import Home from '../home/Home';
 
 const styles = {
     container: {
@@ -26,7 +27,7 @@ class App extends Component {
                 <Grid container justify="center" className={classes.container}>
                     <Grid item>
                         <Switch>
-                            {/*<Route path="/projects" render={()=>{}}/>*/}
+                            <Route path="/" exact component={Home}/>
                         </Switch>
                     </Grid>
                 </Grid>
