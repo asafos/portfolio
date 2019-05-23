@@ -6,6 +6,7 @@ import {withStyles} from '@material-ui/core/styles';
 import {Route, Switch} from "react-router-dom";
 import Header from "./components/Header";
 import Home from '../home/Home';
+import Projects from "../projects/Projects";
 
 const styles = {
     container: {
@@ -28,6 +29,7 @@ class App extends Component {
                     <Grid item>
                         <Switch>
                             <Route path="/" exact component={Home}/>
+                            <Route path="/projects" exact component={Projects}/>
                         </Switch>
                     </Grid>
                 </Grid>

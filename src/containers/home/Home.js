@@ -9,7 +9,7 @@ import avatar from '../../../assets/images/user.png'
 
 const styles = {
     name: {
-        color: 'white',
+        color: '#cacaca',
     },
     avatar: {
         width: 100,
@@ -17,7 +17,7 @@ const styles = {
         margin: 16
     },
     jobTitle: {
-        color: 'white',
+        color: '#848484',
         margin: 16
     }
 };
