@@ -37,7 +37,7 @@ const styles = {
 
 const projects = [
   {
-    title: 'Dog Web',
+    title: 'Online Publishing Platform',
     description: `
     Website for posting stories or articles, similar to Medium.
     Including a local registration mechanism using Passport.js.
