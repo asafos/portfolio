@@ -9,6 +9,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import DogWebImage from '../../../assets/images/dog-web-screenshot.png'
+import Fade from "@material-ui/core/Fade";
 
 const styles = {
   title: {
@@ -17,12 +18,19 @@ const styles = {
   },
   card: {
     maxWidth: 345,
+    margin: '2rem',
+    backgroundColor: '#1d1d1d',
+    boxShadow: '0px 0px 7px 1px'
   },
   // media: {
   //   // ⚠️ object-fit is not supported by IE 11.
   //   objectFit: 'cover',
   // },
+  projectTitle: {
+    color: '#cacaca',
+  },
   description: {
+    color: '#cacaca',
     whiteSpace: 'pre-line'
   }
 };
@@ -40,7 +48,7 @@ const projects = [
     `,
     image: DogWebImage,
     url: 'https://dog-web.herokuapp.com/'
-  }
+  },
 ];
 
 class Projects extends Component {
@@ -49,26 +57,31 @@ class Projects extends Component {
     const {classes} = this.props;
     return (
       <Grid item key={index}>
-        <Card className={classes.card}>
-          <CardActionArea component={props => <a {...props}/>} href={url} target="_blank">
-            {image && <CardMedia
-              component="img"
-              alt="Contemplative Reptile"
-              className={classes.media}
-              height="140"
-              image={image}
-              title="Contemplative Reptile"
-            />}
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-                {title}
-              </Typography>
-              <Typography component="p" className={classes.description}>
-                {description}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
+        <Fade timeout={500 + (index * 400)} in>
+          <Card className={classes.card}>
+            <CardActionArea>
+              <a href={url} target="_blank">
+              {image && <CardMedia
+                component="img"
+                alt="Contemplative Reptile"
+                className={classes.media}
+                height="140"
+                image={image}
+                title="Contemplative Reptile"
+              />}
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2" className={classes.projectTitle}>
+                  {title}
+                </Typography>
+                <Typography component="p" className={classes.description}>
+                  {description}
+                </Typography>
+              </CardContent>
+              </a>
+
+            </CardActionArea>
+          </Card>
+        </Fade>
       </Grid>
     );
   };

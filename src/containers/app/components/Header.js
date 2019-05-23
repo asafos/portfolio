@@ -11,7 +11,9 @@ import {Link, Route, Switch} from "react-router-dom";
 
 const styles = {
   header: {
-    backgroundColor: 'transparent',
+    // backgroundColor: 'transparent',
+    background: 'linear-gradient(to bottom, #2f2f2f, transparent) no-repeat fixed',
+    zIndex: 2,
     boxShadow: 'unset'
   },
   link: {
@@ -30,11 +32,13 @@ class Header extends Component {
     return (
       <AppBar position="fixed" className={classes.header}>
         <Toolbar>
-          <Link to="/" style={{flex: 1}}>
-            <Typography variant="h5" color="inherit">
+          <div style={{flex: 1}}>
+          <Link to="/" style={{width: '4rem'}}>
+            <Typography variant="h5" color="inherit" style={{width: '4rem'}}>
               Home
             </Typography>
           </Link>
+          </div>
           <Link to="/projects" className={classes.link}>
             <Typography variant="subtitle1" color="inherit">
               Projects

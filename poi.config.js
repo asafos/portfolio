@@ -3,17 +3,17 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
-    // output: !isProd ? undefined : {
-    //     html: {
+    output: {
+        html: {
     //         filename: `${filePrefix}_index.html`,
-    //         title: WINDOW_OBJECT_KEY
-    //     },
+            title: 'Asaf Yehezkel - Portfolio'
+        },
     //     publicUrl: './',
     //     fileNames: {
     //         js: `${filePrefix}_[name].js`,
     //         css: `${filePrefix}_[name].css`,
     //     }
-    // },
+    },
     // assets: {
     //     inlineImageMaxSize: 999999
     // },
