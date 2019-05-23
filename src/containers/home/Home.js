@@ -97,7 +97,7 @@ class App extends Component {
               fontWeight: 300
             }}>
               <Fade in={animatingStep >= 1} timeout={2000}>
-                <div ref={e => this.nameContainer = e} style={{ border: startGame ? '1px solid white' : undefined, letterSpacing: '-8px' }}                    >
+                <div ref={e => this.nameContainer = e} style={{ border: startGame ? '1px solid white' : undefined, letterSpacing: '-8px', padding: '1rem', userSelect: 'none' }}                    >
                   <SplitText
                     onDragEnd={() => {
                       if(!startGame) return;
