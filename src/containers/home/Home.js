@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
+import React, { Component } from 'react';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import Grid from "@material-ui/core/es/Grid/Grid";
-import {withStyles} from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import avatar from '../../../assets/images/user.png'
@@ -22,28 +22,36 @@ const styles = {
   jobTitle: {
     color: '#848484',
     margin: 16
+  },
+  startGameButton: {
+    color: '#848484',
+    marginTop: '4rem'
   }
 };
 
+const letters = [];
+
 const charPoses = {
   exit: {
-    opacity: 1,
     x: 0,
     y: 0,
-    draggable: true
-  },
-  enter: {
-    opacity: 1,
-    x: () => (Math.random() - 0.5) * 200,
-    y: () => (Math.random() - 0.5) * 200,
-    draggable: true,
     transition: ({ charInWordIndex }) => ({
       type: 'spring',
       delay: charInWordIndex * 30,
-      stiffness: 500 + charInWordIndex * 150,
-      damping: 10 - charInWordIndex * 1
     })
-  }
+  },
+  enter: {
+    x: ({ charIndex, element }) => {
+      const x = (Math.random() - 0.5) * 200;
+      letters[charIndex] = element;
+      return x;
+    },
+    y: () => (Math.random() - 0.5) * 200,
+    transition: ({ charInWordIndex }) => ({
+      type: 'spring',
+      delay: charInWordIndex * 30,
+    })
+  },
 };
 
 let globalAnimatingStep = 0;
@@ -60,25 +68,26 @@ class App extends Component {
       if (this.state.animatingStep > 10) {
         clearInterval(this.animationsInterval)
       }
-      this.setState(({animatingStep}) => {
+      this.setState(({ animatingStep }) => {
         globalAnimatingStep = animatingStep;
-        return {animatingStep: ++animatingStep}
+        return { animatingStep: ++animatingStep }
       })
     }, 500)
   }
 
   render() {
-    const {classes} = this.props;
-    const {animatingStep, startGame} = this.state;
+    const { classes } = this.props;
+    const { animatingStep, startGame } = this.state;
 
     return (
       <Grid container justify="center" className={classes.container}>
         <Grid item>
           <Grid container alignItems="center" direction="column" className={classes.container}>
             <Grid item>
-              <Fade in={!startGame && animatingStep >= 0} timeout={2000}>
-                <Avatar src={avatar} sizes="100" className={classes.avatar}/>
+              <Fade in={!startGame && animatingStep >= 0} timeout={startGame ? 500 : 2000}>
+                <Avatar src={avatar} sizes="100" className={classes.avatar} />
               </Fade>
+
             </Grid>
             <Grid item style={{
               color: '#fff',
@@ -87,23 +96,50 @@ class App extends Component {
               fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
               fontWeight: 300
             }}>
-                <SplitText pose={startGame ? "enter" : 'exit'} charPoses={charPoses} wordPoses={{draggable: !startGame}} className={classes.name}>
-                  {startGame ? 'A s a f Y e h e z k e l' : 'Asaf Yehezkel'}
-                </SplitText>
-              <Button onClick={() => this.setState({startGame: true})}>Click me</Button>
-              {/*<Fade in={animatingStep >= 1} timeout={2000}>*/}
-              {/*  <Typography variant="h2" className={classes.name}>*/}
-              {/*    Asaf Yehezkel*/}
-              {/*  </Typography>*/}
-              {/*</Fade>*/}
+              <Fade in={animatingStep >= 1} timeout={2000}>
+                <div ref={e => this.nameContainer = e} style={{ border: startGame ? '1px solid white' : undefined, letterSpacing: '-8px' }}                    >
+                  <SplitText
+                    onDragEnd={() => {
+                      if(!startGame) return;
+                      const { x, y, width, height } = this.nameContainer.getBoundingClientRect();
+                      const OFFSET = 10;
+                      let res = [...letters]
+                        .sort((a, b) => a.getBoundingClientRect().x - b.getBoundingClientRect().x)
+                        .map((a) => {
+                          const current = a.getBoundingClientRect()
+                          if (current.x > x - OFFSET && current.y > y - OFFSET && current.x < x + width + OFFSET && current.y < y + height + OFFSET) {
+                            return a.textContent
+                          }
+                          return ''
+                        })
+                        .join('')
+                      if (res === 'AsafYehezkel') {
+                        alert('Great job')
+                        this.setState({ startGame: false })
+                      }
+                    }}
+                    initialPose={"exit"}
+                    pose={startGame ? "enter" : 'exit'}
+                    charPoses={charPoses}
+                    wordPoses={{ draggable: true }}
+                    className={classes.name}>
+                    {'A s a f   Y e h e z k e l'}
+                  </SplitText>
+                </div>
+              </Fade>
             </Grid>
             <Grid item>
-              <Fade in={!startGame && animatingStep >= 2} timeout={2000}>
+              <Fade in={!startGame && animatingStep >= 2} timeout={startGame ? 500 : 2000}>
                 <Typography variant="subtitle1" className={classes.jobTitle}>
                   Full Stack Web and Mobile Developer
                 </Typography>
               </Fade>
             </Grid>
+            <Fade in={animatingStep >= 5} timeout={startGame ? 500 : 2000}>
+              <Button onClick={() => this.setState({ startGame: !startGame })} className={classes.startGameButton}>
+                {startGame ? 'Give up?' : 'Too boring?'}
+              </Button>
+            </Fade>
           </Grid>
         </Grid>
       </Grid>
@@ -111,7 +147,7 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({app}) => ({app});
+const mapStateToProps = ({ app }) => ({ app });
 
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
